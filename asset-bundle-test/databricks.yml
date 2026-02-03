@@ -2,12 +2,14 @@
 bundle:
   name: "asset-bundle-test"
 
-include:
-- resources/*.yml
-- resources/*/*.yml
+sync:
 
-exclude:
-- src/*.lvdash.json
+  include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+  exclude:
+  - src/*.lvdash.json
 
 targets:
   # The 'dev' target, for development purposes. This target is the default.
