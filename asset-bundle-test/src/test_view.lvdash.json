@@ -1,0 +1,155 @@
+{
+  "datasets": [
+    {
+      "displayName": "creative dataset name generation",
+      "name": "c3d900b9",
+      "queryLines": [
+        "select 1, 2, 3;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "displayName": "Untitled page",
+      "layout": [
+        {
+          "position": {
+            "height": 6,
+            "width": 6,
+            "x": 0,
+            "y": 0
+          },
+          "widget": {
+            "name": "96802059",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "c3d900b9",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "expression": "`1`",
+                      "name": "1"
+                    },
+                    {
+                      "expression": "`2`",
+                      "name": "2"
+                    },
+                    {
+                      "expression": "`3`",
+                      "name": "3"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "allowHTMLByDefault": false,
+              "condensed": true,
+              "encodings": {
+                "columns": [
+                  {
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "allowSearch": false,
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "displayAs": "number",
+                    "fieldName": "1",
+                    "highlightLinks": false,
+                    "imageHeight": "",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "linkOpenInNewTab": true,
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "numberFormat": "0",
+                    "order": 100000,
+                    "preserveWhitespace": false,
+                    "title": "1",
+                    "type": "integer",
+                    "useMonospaceFont": false,
+                    "visible": true
+                  },
+                  {
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "allowSearch": false,
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "displayAs": "number",
+                    "fieldName": "2",
+                    "highlightLinks": false,
+                    "imageHeight": "",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "linkOpenInNewTab": true,
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "numberFormat": "0",
+                    "order": 100001,
+                    "preserveWhitespace": false,
+                    "title": "2",
+                    "type": "integer",
+                    "useMonospaceFont": false,
+                    "visible": true
+                  },
+                  {
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "allowSearch": false,
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
+                    "displayAs": "number",
+                    "fieldName": "3",
+                    "highlightLinks": false,
+                    "imageHeight": "",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "linkOpenInNewTab": true,
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "numberFormat": "0",
+                    "order": 100002,
+                    "preserveWhitespace": false,
+                    "title": "3",
+                    "type": "integer",
+                    "useMonospaceFont": false,
+                    "visible": true
+                  }
+                ]
+              },
+              "invisibleColumns": [],
+              "itemsPerPage": 25,
+              "paginationSize": "default",
+              "version": 1,
+              "widgetType": "table",
+              "withRowNumber": false
+            }
+          }
+        }
+      ],
+      "name": "e8f40046",
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ],
+  "uiSettings": {
+    "applyModeEnabled": false,
+    "theme": {
+      "widgetHeaderAlignment": "ALIGNMENT_UNSPECIFIED"
+    }
+  }
+}

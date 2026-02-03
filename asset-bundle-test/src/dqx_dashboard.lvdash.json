@@ -1,0 +1,208 @@
+{
+  "datasets": [
+    {
+      "displayName": "00_1_dq_summary",
+      "name": "00_1_dq_summary",
+      "queryLines": [
+        "/* --title 'Data Quality Summary' */\n",
+        "SELECT \n",
+        "    CASE\n",
+        "        WHEN _errors IS NOT NULL THEN 'Errors'\n",
+        "        WHEN _warnings IS NOT NULL THEN 'Warnings'\n",
+        "    END AS category,\n",
+        "    ROUND((COUNT(*) * 100.0 / (SELECT COUNT(*) FROM lsh_catalog.dqx.results)), 2) AS percentage\n",
+        "FROM lsh_catalog.dqx.results\n",
+        "GROUP BY category"
+      ]
+    },
+    {
+      "displayName": "00_2_dq_error_types",
+      "name": "00_2_dq_error_types",
+      "queryLines": [
+        "/* --title 'Error and Warning Types Breakdown' */\n",
+        "WITH error_types AS (\n",
+        "    SELECT\n",
+        "        'Error' AS category,\n",
+        "        error_struct.name AS type,\n",
+        "        COUNT(*) AS count\n",
+        "    FROM lsh_catalog.dqx.results\n",
+        "    LATERAL VIEW EXPLODE(_errors) exploded_errors AS error_struct\n",
+        "    WHERE _errors IS NOT NULL\n",
+        "    GROUP BY error_struct.name\n",
+        "),\n",
+        "warning_types AS (\n",
+        "    SELECT\n",
+        "        'Warning' AS category,\n",
+        "        warning_struct.name AS type,\n",
+        "        COUNT(*) AS count\n",
+        "    FROM lsh_catalog.dqx.results\n",
+        "    LATERAL VIEW EXPLODE(_warnings) exploded_warnings AS warning_struct\n",
+        "    WHERE _warnings IS NOT NULL\n",
+        "    GROUP BY warning_struct.name\n",
+        "),\n",
+        "combined AS (\n",
+        "    SELECT * FROM error_types\n",
+        "    UNION ALL\n",
+        "    SELECT * FROM warning_types\n",
+        "),\n",
+        "total AS (\n",
+        "    SELECT SUM(count) AS total_count FROM combined\n",
+        ")\n",
+        "SELECT\n",
+        "    category,\n",
+        "    type,\n",
+        "    count,\n",
+        "    ROUND((count * 100.0) / total.total_count, 2) AS percentage\n",
+        "FROM combined, total\n",
+        "ORDER BY category, count DESC;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "displayName": "DQX_Quality_Dashboard",
+      "layout": [
+        {
+          "position": {
+            "height": 6,
+            "width": 3,
+            "x": 0,
+            "y": 0
+          },
+          "widget": {
+            "name": "00_1_dq_summary_widget",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "00_1_dq_summary",
+                  "disaggregated": false,
+                  "fields": [
+                    {
+                      "expression": "SUM(`percentage`)",
+                      "name": "sum(percentage)"
+                    },
+                    {
+                      "expression": "`category`",
+                      "name": "category"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "encodings": {
+                "angle": {
+                  "displayName": "Total Row Counts",
+                  "fieldName": "sum(percentage)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "color": {
+                  "displayName": "category",
+                  "fieldName": "category",
+                  "scale": {
+                    "mappings": [
+                      {
+                        "color": "#00A972"
+                      },
+                      {
+                        "color": "#FFAB00"
+                      },
+                      {
+                        "color": "#FF3621"
+                      }
+                    ],
+                    "type": "categorical"
+                  }
+                },
+                "label": {
+                  "show": true
+                }
+              },
+              "frame": {
+                "description": "",
+                "showDescription": false,
+                "showTitle": true,
+                "title": "Data Quality Summary"
+              },
+              "version": 3,
+              "widgetType": "pie"
+            }
+          }
+        },
+        {
+          "position": {
+            "height": 6,
+            "width": 3,
+            "x": 3,
+            "y": 0
+          },
+          "widget": {
+            "name": "00_2_dq_error_types_widget",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "00_2_dq_error_types",
+                  "disaggregated": true,
+                  "fields": [
+                    {
+                      "expression": "`category`",
+                      "name": "Category"
+                    },
+                    {
+                      "expression": "`type`",
+                      "name": "Type"
+                    },
+                    {
+                      "expression": "`count`",
+                      "name": "Count"
+                    },
+                    {
+                      "expression": "`percentage`",
+                      "name": "Percentage"
+                    }
+                  ]
+                }
+              }
+            ],
+            "spec": {
+              "encodings": {
+                "columns": [
+                  {
+                    "displayName": "Category",
+                    "fieldName": "Category"
+                  },
+                  {
+                    "displayName": "Type",
+                    "fieldName": "Type"
+                  },
+                  {
+                    "displayName": "Count",
+                    "fieldName": "Count"
+                  },
+                  {
+                    "displayName": "Percentage (%)",
+                    "fieldName": "Percentage"
+                  }
+                ]
+              },
+              "frame": {
+                "description": "",
+                "showDescription": false,
+                "showTitle": true,
+                "title": "Error and Warning Types Breakdown"
+              },
+              "version": 2,
+              "widgetType": "table"
+            }
+          }
+        }
+      ],
+      "name": "DQX_Quality_Dashboard",
+      "pageType": "PAGE_TYPE_CANVAS"
+    }
+  ]
+}
