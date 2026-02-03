@@ -11,6 +11,13 @@ sync:
   exclude:
   - src/*.lvdash.json
 
+resources:
+  dashboards:
+    test_view:
+      display_name: "test-view"
+      warehouse_id: 7a8df1a659d394c3
+      file_path: ../src/test_view.lvdash.json
+
 targets:
   # The 'dev' target, for development purposes. This target is the default.
   dev:
